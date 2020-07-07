@@ -6,12 +6,14 @@ with open("data.json") as dictionary:
 
 def traslate(word):
     word = word.lower()
+    # Check if the word is in the dictionary
     if word in dictionary_data:
         return dictionary_data[word]
     elif word.upper() in dictionary_data:
         return dictionary_data[word.upper()]
     elif word.capitalize() in dictionary_data:
         return dictionary_data[word.capitalize()]
+    # If the word isn't in the dictionary we will try find the most similar
     elif get_close_matches(word, dictionary_data.keys(), n=1, cutoff=0.8):
         prob_word = get_close_matches(word, dictionary_data.keys(),
                 n=1, cutoff=0.8)[0]
@@ -26,6 +28,7 @@ def traslate(word):
 word = input("Enter word: ")
 result = traslate(word)
 
+# Show each definition
 if isinstance(result, list):
     number_definitions = len(result)
     for def_index in range(number_definitions):
